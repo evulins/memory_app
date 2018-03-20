@@ -12,10 +12,10 @@ const cards = ['diamond', 'diamond', 'paper-plane-o', 'paper-plane-o', 'bolt', '
  */
 
 function showCards(cardList) { 
-	var newList = shuffle(cards);
+	const newList = shuffle(cards);
 
-	for (var i = 0; i < cardList.length; i++) {
-	    var current = cardList[i];
+	for (let i = 0; i < cardList.length; i++) {
+	    const current = cardList[i];
 		const card = `
 			<li class="card">
 		    	<i class="fa fa-${current}"></i>
@@ -28,7 +28,7 @@ function showCards(cardList) {
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    const currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -43,9 +43,9 @@ function shuffle(array) {
 
 //Displays the card's symbol 
 function showSymbol(card) {
-	for (var i = 0; i < card.length; i++) {
-	    var current = card[i];
-		var cardSymbol = `
+	for (let i = 0; i < card.length; i++) {
+	    const current = card[i];
+		const cardSymbol = `
 		<li class="card open show">
          	<i class="fa fa-${current}"></i>
         </li>`;
