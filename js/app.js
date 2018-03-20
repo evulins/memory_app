@@ -11,8 +11,9 @@ const cards = ['diamond', 'diamond', 'paper-plane-o', 'paper-plane-o', 'bolt', '
  *   - add each card's HTML to the page
  */
 
-function showCards(cardList) {
-	shuffle(cardList);
+function showCards(cardList) { 
+	var newList = shuffle(cards);
+
 	for (var i = 0; i < cardList.length; i++) {
 	    var current = cardList[i];
 		const card = `
@@ -21,6 +22,8 @@ function showCards(cardList) {
 		    </li>`;
 		$(".deck").append(card);
 	};
+
+	return cardList;
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -38,6 +41,24 @@ function shuffle(array) {
     return array;
 }
 
+//Displays the card's symbol 
+function showSymbol(card) {
+	for (var i = 0; i < card.length; i++) {
+	    var current = card[i];
+		var cardSymbol = `
+		<li class="card open show">
+         	<i class="fa fa-${current}"></i>
+        </li>`;
+		$('.deck').append(cardSymbol);
+	};
+
+	return card;
+}
+
+//Adds the card to open cards list
+function openCards() {
+
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -50,8 +71,17 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+$('li.card').on('click', function(event) {
+    event.preventDefault();
+    showSymbol(cards);
+  });
 
 
+
+(function() {
+  // showCards(cards);
+  showSymbol(cards);
+})();
 
 
 
