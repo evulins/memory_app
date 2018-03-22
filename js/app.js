@@ -2,7 +2,9 @@
  * Create a list that holds all of your cards
  */
 const cards = ['diamond', 'diamond', 'paper-plane-o', 'paper-plane-o', 'bolt', 'bolt', 'cube', 'cube', 'anchor', 'anchor', 'leaf', 'leaf', 'bicycle', 'bicycle', 'bomb', 'bomb'];
+const openCards = [];
 
+let moveCounter = 0;
 
 /*
  * Display the cards on the page
@@ -12,23 +14,19 @@ const cards = ['diamond', 'diamond', 'paper-plane-o', 'paper-plane-o', 'bolt', '
  */
 
 function showCards(cardList) { 
-	const newList = shuffle(cards);
-
-	for (let i = 0; i < cardList.length; i++) {
-	    const current = cardList[i];
-		const card = `
-			<li class="card">
-		    	<i class="fa fa-${current}"></i>
+	const shuffledCards = shuffle(cards);
+ 	shuffledCards.forEach(function(card) {
+ 		const cardHTML = `
+			<li class='card'>
+		    	<i class="fa fa-${card}"></i>
 		    </li>`;
-		$(".deck").append(card);
-	};
-
-	return cardList;
+		$(".deck").append(cardHTML);
+ 	})
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    const currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -42,22 +40,53 @@ function shuffle(array) {
 }
 
 //Displays the card's symbol 
-function showSymbol(card) {
-	for (let i = 0; i < card.length; i++) {
-	    const current = card[i];
-		const cardSymbol = `
-		<li class="card open show">
-         	<i class="fa fa-${current}"></i>
-        </li>`;
-		$('.deck').append(cardSymbol);
-	};
+function showCard(card) {
+	card.addClass('open show');
+}
 
-	return card;
+//Hides the card's symbol
+function hideCard(card) {
+	card.removeClass('open show')
 }
 
 //Adds the card to open cards list
-function openCards() {
+function addToOpenCards(card) {
+	openCards.push(card);
+}
 
+//Gets card class
+function getCardClass(card) {
+	return card.find('i:first').attr('class');
+}
+
+//Locks the matching cards in the open position 
+function lockOpenCard (card) {
+	card.addClass('match');
+}
+
+//Checks to see if the two cards match
+function matchCards (card1, card2) {
+	const card1Class = getCardClass(card1);
+	const card2Class = getCardClass(card2);
+
+	if (card1Class === card2Class) {
+		lockOpenCard(card1);
+		lockOpenCard(card2);
+
+	} else {
+		hideCard(card1);
+		hideCard(card2);
+	}
+	openCards.splice(0, openCards.length);
+}
+
+function updateMoveCounter() {
+	moveCounter += 1;
+	$('span.moves').text(moveCounter);
+}
+
+function displayFinalScore() {
+	alert
 }
 
 /*
@@ -71,16 +100,31 @@ function openCards() {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-$('li.card').on('click', function(event) {
-    event.preventDefault();
-    showSymbol(cards);
-  });
-
 
 
 (function() {
-  // showCards(cards);
-  showSymbol(cards);
+
+  showCards(cards);
+
+  $('.card').on('click', function(event) {
+    event.preventDefault();
+    showCard($(this));
+    addToOpenCards($(this));
+    setTimeout(
+    	function() {
+
+	    	if (openCards.length === 2) {
+	    		matchCards(openCards[0], openCards[1]);
+	    		updateMoveCounter();
+	    	}
+    	},
+    	1100
+    )
+    
+    
+
+ });
+
 })();
 
 
