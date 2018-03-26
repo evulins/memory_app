@@ -6,6 +6,10 @@ const openCards = [];
 
 let moveCounter = 0;
 
+let gameStarted = false;
+
+
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -49,6 +53,11 @@ function hideCard(card) {
 	card.removeClass('open show')
 }
 
+//Adds animation to not matching cards
+function animateWrongResult(card) {
+	card.addClass('wrongPair')
+}
+
 //Adds the card to open cards list
 function addToOpenCards(card) {
 	openCards.push(card);
@@ -72,22 +81,83 @@ function matchCards (card1, card2) {
 	if (card1Class === card2Class) {
 		lockOpenCard(card1);
 		lockOpenCard(card2);
-
 	} else {
-		hideCard(card1);
-		hideCard(card2);
+		animateWrongResult(card1);
+		animateWrongResult(card2);
+		setTimeout(function() {
+    		hideCard(card1);
+			hideCard(card2);
+		}, 300);
+		
 	}
 	openCards.splice(0, openCards.length);
 }
+
+//Increments and updates the move counter
 
 function updateMoveCounter() {
 	moveCounter += 1;
 	$('span.moves').text(moveCounter);
 }
 
-function displayFinalScore() {
-	alert
+//Updates stare raiting
+
+function updateStarRating() {
+	const star = `
+		<li>
+			<i class="fa fa-star"></i>
+		</li>
+	`;
+	let starsCount = 3;
+
+	if (moveCounter > 10 && moveCounter <= 20) {
+		starsCount = 2;
+
+	} else if (moveCounter > 20) {
+		starsCount = 1;
+	}
+	$('.stars').empty();
+	for (let i = 0; i < starsCount; i = i + 1) {
+		$('.stars').append(star);
+	}
 }
+
+//Displays final score
+function displayFinalScore() {
+	let matchCards = $('li.match').length;
+    if (matchCards === cards.length) {
+		$('.runner').runner('stop');
+		setTimeout (
+			function() {
+				const time = $('.runner').text();
+				const scorePopup = $('.score-popup');
+				scorePopup.find('.totalMoves').text(moveCounter);
+				scorePopup.find('.totalTime').text(time);				
+				scorePopup.show();
+			},
+			500
+		)
+    }
+}
+
+//Closes pop-up with the final score
+$('.close').on('click', function() {
+	event.preventDefault();
+	$('.score-popup').hide();
+});
+
+//Resets the game and the score
+$('.restart').on('click', function() {
+	event.preventDefault();
+	$('li').removeClass('open show');
+	$('li').removeClass('match');
+	$('span.moves').text('0');
+	$('.runner').runner('reset', true);
+	moveCounter = 0;
+	updateStarRating();
+	$('.score-popup').hide();
+	gameStarted = false;
+});
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -105,23 +175,33 @@ function displayFinalScore() {
 (function() {
 
   showCards(cards);
-
+  updateStarRating();
+  $('.runner').runner();
   $('.card').on('click', function(event) {
     event.preventDefault();
-    showCard($(this));
-    addToOpenCards($(this));
+
+    if (gameStarted === false) {
+    	gameStarted = true;
+    	$('.runner').runner('start');
+    }
+
+    updateStarRating();
+    if (openCards.length < 2 && $(this).hasClass('open show') === false) {
+    	showCard($(this));
+    	addToOpenCards($(this));	
+    }
+   
     setTimeout(
     	function() {
 
 	    	if (openCards.length === 2) {
 	    		matchCards(openCards[0], openCards[1]);
 	    		updateMoveCounter();
+	    		displayFinalScore();
 	    	}
     	},
-    	1100
+    	1200
     )
-    
-    
 
  });
 
