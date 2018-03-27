@@ -105,8 +105,8 @@ function updateMoveCounter() {
 }
 
 //Counts stars
-function starsCount(starsCount) {
-	starsCount = 3;
+function starsCount() {
+	let starsCount = 3;
 
 	if (moveCounter > 10 && moveCounter <= 20) {
 		starsCount = 2;
@@ -114,7 +114,9 @@ function starsCount(starsCount) {
 	} else if (moveCounter > 20) {
 		starsCount = 1;
 	}
+	return starsCount;
 }
+
 //Updates stare raiting
 function updateStarRating() {
 	const star = `
@@ -122,7 +124,7 @@ function updateStarRating() {
 			<i class='fa fa-star'></i>
 		</li>
 	`;
-	starsCount(star);
+	starsCount();
 	$('.stars').empty();
 	for (let i = 0; i < starsCount; i = i + 1) {
 		$('.stars').append(star);
