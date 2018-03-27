@@ -124,9 +124,9 @@ function updateStarRating() {
 			<i class='fa fa-star'></i>
 		</li>
 	`;
-	starsCount();
+	let starsNumber = starsCount();
 	$('.stars').empty();
-	for (let i = 0; i < starsCount; i = i + 1) {
+	for (let i = 0; i < starsNumber; i = i + 1) {
 		$('.stars').append(star);
 	}
 }
@@ -139,7 +139,7 @@ function displayFinalScore() {
 		setTimeout (
 			function() {
 				const time = $('.runner').text();
-				const stars = $('.stars').text();
+				const stars = starsCount();
 				const scorePopup = $('.score-popup');
 				scorePopup.find('.totalMoves').text(moveCounter);
 				scorePopup.find('.totalTime').text(time);
