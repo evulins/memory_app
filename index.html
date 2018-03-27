@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Music Memory</title>
+    <title>Memory Game</title>
     <meta name="description" content="">
     <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
@@ -16,25 +16,30 @@
         </header>
 
         <section class="score-panel">
+            <!-- List of stars -->
         	<ul class="stars">
         	</ul>
-
+            <!-- Move counter -->
         	<span class="moves">0</span> Moves
+            <!-- Stopwatch -->
             <span class="runner"></span>
-
+            <!-- Button which restarts the game -->
             <div class="restart">
         		<i class="fa fa-repeat"></i>
         	</div>
         </section>
-
+        <!-- List of cards  -->
         <ul class="deck"></ul>
-
-        <div class="score-popup" style="display: none;">
+        <!-- Pop-up with final score  -->
+        <div class="score-popup", style="display: none;">
             <a href="#"><span class="fa fa-times close"></span></a>
-            <p>Congratulation! You won!</p>
+            <p>Congratulations! You won!</p>
             <p>Total moves:  <span class="totalMoves"></span> </p>
             <p>Time:  <span class="totalTime"></span> sec.</p>
+            <p>Stars: <span class="totalStars"></span></p>
+            <a href="#"><input type="button" class="button" value="Let's play again!" /></a>
         </div>
+        <div class="score-window", style="display: none;"></div>
 
     </div>
 
