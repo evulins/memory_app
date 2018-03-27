@@ -5,7 +5,7 @@ _Memory App_ is a project from Udacity course - "Front-End Web Developer Nanodeg
 1. This is a complete, responsive browser-based card matching game.
 2. Project includes HTML, JS and CSS files.
 3. Page utilizes a flexbox layout.
-4. Project utilizes jQuery and uses it's runner plugin.
+4. Project utilizes jQuery library and uses jQuery plugin = Runner.
 
 ## Game details
 Each turn:
