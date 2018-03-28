@@ -15,20 +15,21 @@ let gameStarted = false;
 
 //Displays the cards on the page
 function showCards(cardList) {
-
 //Shuffles the list
 	const shuffledCards = shuffle(cards);
-
 //Loops through each card and create its HTML
  	shuffledCards.forEach(function(card) {
  		const cardHTML = `
 			<li class='card'>
 		    	<i class="fa fa-${card}"></i>
 		    </li>`;
-
 //Adds each card's HTML to the page
-		$(".deck").append(cardHTML);
+		$('.deck').append(cardHTML);
  	})
+}
+
+function clearCardsList() {
+	$('.deck').empty();
 }
 
 //Shuffle function from http://stackoverflow.com/a/2450976
@@ -171,6 +172,8 @@ $('.restart, .button').on('click', function() {
 	$('.score-popup').hide();
 	$('.score-window').hide();
 	gameStarted = false;
+	clearCardsList();
+	showCards(cards);
 });
 
 //This function is activating every time when page is reloding
