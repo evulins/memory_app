@@ -28,6 +28,7 @@ function showCards(cardList) {
  	})
 }
 
+//Clears the card list
 function clearCardsList() {
 	$('.deck').empty();
 }
@@ -173,7 +174,6 @@ $('.restart, .button').on('click', function() {
 	$('.score-window').hide();
 	gameStarted = false;
 	clearCardsList();
-	showCards(cards);
 	startGame();
 });
 
@@ -212,11 +212,12 @@ function startGame() {
 	    	1200
 	    )
 	});
-
 }
 
 //This function is activating every time when page is reloding
-(startGame())();
+(function() {
+	startGame();
+})();
 
 
 
