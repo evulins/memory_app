@@ -174,10 +174,11 @@ $('.restart, .button').on('click', function() {
 	gameStarted = false;
 	clearCardsList();
 	showCards(cards);
+	startGame();
 });
 
-//This function is activating every time when page is reloding
-(function() {
+//Initiates the game
+function startGame() {
 	showCards(cards);
 	updateStarRating();
 
@@ -212,7 +213,10 @@ $('.restart, .button').on('click', function() {
 	    )
 	});
 
-})();
+}
+
+//This function is activating every time when page is reloding
+(startGame())();
 
 
 
